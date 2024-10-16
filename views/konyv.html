@@ -33,6 +33,22 @@
                 </tr>
               </thead>
         </table>
+
+        <hr>
+        <h3>Könyv feltöltése</h3>
+        <div class="form-floating mb-3 konyvinput">
+            <input type="text" class="form-control" id="title" placeholder="Cím">
+            <label for="title">Cím</label>
+          </div>
+          <div class="form-floating mb-3 konyvinput">
+            <input type="text" class="form-control" id="release" placeholder="Megjelenés">
+            <label for="release">Megjelenés</label>
+          </div>
+          <div class="form-floating mb-3 konyvinput">
+            <input type="text" class="form-control" id="ISBN" placeholder="ISBN szám">
+            <label for="ISBN">ISBN szám</label>
+        </div>
+        <button class="btn btn-primary" onclick="uploadBook()">Könyv feltöltés</button>
 </main>
 
 </body>

@@ -20,7 +20,7 @@ function getBooks() {
 
                 id.innerHTML = item.id
                 title.innerHTML = item.title;
-                release.innerHTML = item.release;
+                release.innerHTML = moment(item.release).format('YYYY-MM-DD');
                 ISBN.innerHTML = item.ISBN;
 
                 tr.appendChild(id);
@@ -30,6 +30,33 @@ function getBooks() {
                 tbody.appendChild(tr);
                 konyvTable.appendChild(tbody)
             });
+        }
+    }
+}
+
+function uploadBook(){
+    let book = JSON.stringify({
+        title: document.querySelector('#title').value,
+        release: document.querySelector('#release').value,
+        ISBN: document.querySelector('#ISBN').value
+    })
+
+    xhr.open('POST', 'http://localhost:3000/books', true)
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    xhr.send(book);
+
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                alert("Sikeres adat rögzítés");
+                title.value="";
+                release.value="";
+                ISBN.value="";
+                location.reload();
+            }
+            else{
+                alert(xhr.responseText);
+            }
         }
     }
 }

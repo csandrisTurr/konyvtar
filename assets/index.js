@@ -8,7 +8,12 @@ async function render(view){
             break;
         }
         case 'szerzo': {
+            getAuthors()
             break;
         }
     }
+}
+
+function bookAuthors() {
+    
 }
