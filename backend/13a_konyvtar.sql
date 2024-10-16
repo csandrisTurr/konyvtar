@@ -17,6 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+CREATE DATABASE `13a_konyvtar`
+DEFAULT CHARACTER SET `utf8`
+COLLATE `utf8_hungarian_ci`;
+
+USE `13a_konyvtar`;
+
 --
 -- Adatbázis: `13a_konyvtar`
 --
@@ -31,7 +37,7 @@ CREATE TABLE `authors` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `birth` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
@@ -44,7 +50,7 @@ CREATE TABLE `books` (
   `title` varchar(100) NOT NULL,
   `release` date NOT NULL,
   `ISBN` varchar(13) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +61,7 @@ CREATE TABLE `books` (
 CREATE TABLE `book_authors` (
   `authorId` int(11) NOT NULL,
   `bookId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- Indexek a kiírt táblákhoz
