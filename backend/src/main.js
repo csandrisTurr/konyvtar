@@ -33,6 +33,8 @@ app.get('/books', (req, res) => {
 app.post('/books', (req, res) => {
   const { title, release, ISBN } = req.body;
 
+  if (!title || !release || !ISBN) return res.status(400).send();
+
   q(res, 'INSERT INTO `books` (`title`, `release`, `ISBN`) VALUES (?, ?, ?)', [title, release, ISBN]);
 });
 
@@ -48,7 +50,6 @@ app.put('/books/:id', (req, res) => {
 app.delete('/books/:id', (req, res) => {
   const id = req.params.id;
 
-  res.send('Hello World!');
   q(res, 'DELETE FROM `books` WHERE `id` = ?', [id]);
 });
 
