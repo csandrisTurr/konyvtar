@@ -4,6 +4,7 @@ async function render(view){
 
     switch(view){
         case 'konyv': {
+            getBooks()
             break;
         }
         case 'szerzo': {
