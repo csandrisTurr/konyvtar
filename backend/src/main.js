@@ -40,9 +40,7 @@ app.put('/books/:id', (req, res) => {
   const { title, release, ISBN } = req.body;
   const id = req.params.id;
 
-  if (!title || !release || !ISBN) {
-    return res.status(400).send();
-  }
+  if (!title || !release || !ISBN) return res.status(400).send();
 
   q(res, 'UPDATE TABLE `books` SET `title` = ?, `release` = ?, `ISBN` = ? WHERE `id` = ?', [title, release, ISBN, id]);
 });
@@ -55,19 +53,30 @@ app.delete('/books/:id', (req, res) => {
 });
 
 app.get('/authors', (req, res) => {
-  res.send();
+  q(res, 'SELECT * FROM `authors`');
 });
 
 app.post('/authors', (req, res) => {
-  res.send('Hello World!');
+  const { name, birth } = req.body;
+
+  if (!name || !birth) return res.status(400).send();
+
+  q(res, 'INSERT INTO `authors` (`name`, `birth`) VALUES (?, ?)', [name, birth]);
 });
 
 app.put('/authors/:id', (req, res) => {
-  res.send('Hello World!');
+  const { name, birth } = req.body;
+  const id = req.params.id;
+
+  if (!name || !birth) return res.status(400).send();
+
+  q(res, 'UPDATE TABLE `authors` SET `name` = ?, `birth` = ? WHERE `id` = ?', [name, birth, id]);
 });
 
 app.delete('/authors/:id', (req, res) => {
-  res.send('Hello World!');
+  const id = req.params.id;
+
+  q(res, 'DELETE FROM `books` WHERE `id` = ?', [id]);
 });
 
 app.post('/books/:bookId/authors/:authorId', (req, res) => {
