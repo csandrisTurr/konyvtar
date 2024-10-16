@@ -46,7 +46,7 @@ app.put('/books/:id', (req, res) => {
 
   if (!title || !release || !ISBN) return res.status(400).send();
 
-  q(res, 'UPDATE TABLE `books` SET `title` = ?, `release` = ?, `ISBN` = ? WHERE `id` = ?', [title, release, ISBN, id]);
+  q(res, 'UPDATE `books` SET `title`=?, `release`=?, `ISBN`=? WHERE `id`=?', [title, release, ISBN, id]);
 });
 
 app.delete('/books/:id', (req, res) => {
