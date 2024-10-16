@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use(express.urlencoded());
 const port = 3000;
 
 let mysql = require('mysql');
@@ -24,31 +25,58 @@ app.use((err, req, res, next) => {
   res.status(500).send('valami nem jo szerintem');
 });
 
-app.get('/books', (req, res) => {
-  connection.query(
-    'SELECT 1 + 1 AS solution',
-    function (error, results, fields) {
-      if (error) throw error;
-    }
-  );
+function query(query, values) {
+  return new Promise((resolve, reject) => {
+    connection.query(query, values ?? [], function (err, res, fields) {
+      if (err) reject(err);
 
-  res.send('Hello World!');
+      resolve(res, fields);
+    });
+  });
+}
+
+function q(res, q, values, callback) {
+  query(q, values)
+    .then((results, fields) => {
+      if (callback) return callback(results, fields);
+
+      res.send(results);
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
+
+app.get('/books', (req, res) => {
+  q(res, 'SELECT * FROM `books`');
 });
 
 app.post('/books', (req, res) => {
-  res.send('Hello World!');
+  const { title, release, ISBN } = req.body;
+
+  q(res, 'INSERT INTO `books` (`title`, `release`, `ISBN`) VALUES (?, ?, ?)', [title, release, ISBN]);
 });
 
 app.put('/books/:id', (req, res) => {
-  res.send('Hello World!');
+  const { title, release, ISBN } = req.body;
+  const id = req.params.id;
+
+  if (!title || !release || !ISBN) {
+    return res.status(400).send();
+  }
+
+  q(res, 'UPDATE TABLE `books` SET `title` = ?, `release` = ?, `ISBN` = ? WHERE `id` = ?', [title, release, ISBN, id]);
 });
 
 app.delete('/books/:id', (req, res) => {
+  const id = req.params.id;
+
   res.send('Hello World!');
+  q(res, 'DELETE FROM `books` WHERE `id` = ?', [id]);
 });
 
 app.get('/authors', (req, res) => {
-  res.send('Hello World!');
+  res.send();
 });
 
 app.post('/authors', (req, res) => {
