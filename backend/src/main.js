@@ -73,7 +73,7 @@ app.put('/authors/:id', (req, res) => {
 
   if (!name || !birth) return res.status(400).send();
 
-  q(res, 'UPDATE TABLE `authors` SET `name` = ?, `birth` = ? WHERE `id` = ?', [name, birth, id]);
+  q(res, 'UPDATE `authors` SET `name` = ?, `birth` = ? WHERE `id` = ?', [name, birth, id]);
 });
 
 app.delete('/authors/:id', (req, res) => {
