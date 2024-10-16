@@ -26,67 +26,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('valami nem jo szerintem');
 });
 
-/** Wrapper function, egy promiset csinal barmilyen sql lekerdezesbol.
- * Lenyege, hogy szebben lehessen irni sql lekerdezeseket.
- * 
- * ehelyett:
- * ```
- * connection.query('SELECT * FROM `books` WHERE `id` = ?, [1], function (err, res, fields) {
- *   if (err) { valami ha van error; return };
- *   valami ha nincs error;
- * });
- * ``` 
- * ez:
- * ```
- * query('SELECT * FROM `books` WHERE ?', [1])
- *   .then((results, fields) => {
- *     valami ha nincs error
- *   })
- *   .catch((err) => {
- *     valami ha van error
- *   });
- * ```
- */ 
-function query(query, values) {
-  return new Promise((resolve, reject) => {
-    connection.query(query, values ?? [], function (err, res, fields) {
-      if (err) reject(err);
-
-      resolve(res, fields);
-    });
-  });
-}
-
-/** Wrapper function arra, hogy szepen es egyszeruen lehessen lekerdezeseket irni.
- * Megszimplabb, mint a "query" function.
- * 
- * 
- * @param {Response} res lehet null, ha van callback
- * @param {string} q a SQL lekerdezes
- * @param {Array} values egy lista, ami a placeholdereket tartalmazza (? helyere behelyettesito dolgok) 
- * @param {(results: Array, fields: Array) => void} callback function ami akkor fut le, ha lefut a lekerdezes
- * 
- * ### Pelda:
- * ```
- * q(res, 'SELECT * FROM `books`');
- * q(res, 'SELECT * FROM `books` WHERE `id` = ?', [1]);
- * q(null, 'SELECT * FROM `books` WHERE `id` = ?', [1], (results, fields) => {
- *   console.log('sikeres lekerdezes');
- * });
- * ```
- */
-function q(res, q, values, callback) {
-  query(q, values)
-    .then((results, fields) => {
-      if (callback) return callback(results, fields);
-
-      res.send(results);
-    })
-    .catch((err) => {
-      throw err;
-    });
-}
-
 app.get('/books', (req, res) => {
   q(res, 'SELECT * FROM `books`');
 });
@@ -138,3 +77,64 @@ app.post('/books/:bookId/authors/:authorId', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+/** Wrapper function, egy promiset csinal barmilyen sql lekerdezesbol.
+ * Lenyege, hogy szebben lehessen irni sql lekerdezeseket.
+ *
+ * ehelyett:
+ * ```
+ * connection.query('SELECT * FROM `books` WHERE `id` = ?, [1], function (err, res, fields) {
+ *   if (err) { valami ha van error; return };
+ *   valami ha nincs error;
+ * });
+ * ```
+ * ez:
+ * ```
+ * query('SELECT * FROM `books` WHERE ?', [1])
+ *   .then((results, fields) => {
+ *     valami ha nincs error
+ *   })
+ *   .catch((err) => {
+ *     valami ha van error
+ *   });
+ * ```
+ */
+function query(query, values) {
+  return new Promise((resolve, reject) => {
+    connection.query(query, values ?? [], function (err, res, fields) {
+      if (err) reject(err);
+
+      resolve(res, fields);
+    });
+  });
+}
+
+/** Wrapper function arra, hogy szepen es egyszeruen lehessen lekerdezeseket irni.
+ * Megszimplabb, mint a "query" function.
+ *
+ *
+ * @param {Response} res lehet null, ha van callback
+ * @param {string} q a SQL lekerdezes
+ * @param {Array} values egy lista, ami a placeholdereket tartalmazza (? helyere behelyettesito dolgok)
+ * @param {(results: Array, fields: Array) => void} callback function ami akkor fut le, ha lefut a lekerdezes
+ *
+ * ### Pelda:
+ * ```
+ * q(res, 'SELECT * FROM `books`');
+ * q(res, 'SELECT * FROM `books` WHERE `id` = ?', [1]);
+ * q(null, 'SELECT * FROM `books` WHERE `id` = ?', [1], (results, fields) => {
+ *   console.log('sikeres lekerdezes');
+ * });
+ * ```
+ */
+function q(res, q, values, callback) {
+  query(q, values)
+    .then((results, fields) => {
+      if (callback) return callback(results, fields);
+
+      res.send(results);
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
