@@ -3,10 +3,7 @@ const app = express();
 const port = 3000;
 
 let mysql = require('mysql');
-let connection;
-
-// valamiert nem mukodik a try de akkor Rendben van.
-connection = mysql.createConnection({
+let connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
