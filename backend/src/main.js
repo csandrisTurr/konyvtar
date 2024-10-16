@@ -144,7 +144,7 @@ function q(res, q, values, callback) {
     .then((results, fields) => {
       if (callback) return callback(results, fields);
 
-      res.send(results);
+      res.status(200).send(results);
     })
     .catch((err) => {
       throw err;
