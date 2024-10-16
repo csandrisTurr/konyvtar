@@ -11,6 +11,7 @@ let connection = mysql.createConnection({
   database: '13a_konyvtar',
 });
 
+// megprobal csatlakozni adatbazishoz, ha nem tud akkor kiirja hogy mi a baj es kilep a programbol
 connection.connect((err) => {
   if (err) {
     console.error('error connecting: ' + err.stack);
@@ -25,6 +26,27 @@ app.use((err, req, res, next) => {
   res.status(500).send('valami nem jo szerintem');
 });
 
+/** Wrapper function, egy promiset csinal barmilyen sql lekerdezesbol.
+ * Lenyege, hogy szebben lehessen irni sql lekerdezeseket.
+ * 
+ * ehelyett:
+ * ```
+ * connection.query('SELECT * FROM `books` WHERE `id` = ?, [1], function (err, res, fields) {
+ *   if (err) { valami ha van error; return };
+ *   valami ha nincs error;
+ * });
+ * ``` 
+ * ez:
+ * ```
+ * query('SELECT * FROM `books` WHERE ?', [1])
+ *   .then((results, fields) => {
+ *     valami ha nincs error
+ *   })
+ *   .catch((err) => {
+ *     valami ha van error
+ *   });
+ * ```
+ */ 
 function query(query, values) {
   return new Promise((resolve, reject) => {
     connection.query(query, values ?? [], function (err, res, fields) {
@@ -35,6 +57,24 @@ function query(query, values) {
   });
 }
 
+/** Wrapper function arra, hogy szepen es egyszeruen lehessen lekerdezeseket irni.
+ * Megszimplabb, mint a "query" function.
+ * 
+ * 
+ * @param {Response} res lehet null, ha van callback
+ * @param {string} q a SQL lekerdezes
+ * @param {Array} values egy lista, ami a placeholdereket tartalmazza (? helyere behelyettesito dolgok) 
+ * @param {(results: Array, fields: Array) => void} callback function ami akkor fut le, ha lefut a lekerdezes
+ * 
+ * ### Pelda:
+ * ```
+ * q(res, 'SELECT * FROM `books`');
+ * q(res, 'SELECT * FROM `books` WHERE `id` = ?', [1]);
+ * q(null, 'SELECT * FROM `books` WHERE `id` = ?', [1], (results, fields) => {
+ *   console.log('sikeres lekerdezes');
+ * });
+ * ```
+ */
 function q(res, q, values, callback) {
   query(q, values)
     .then((results, fields) => {
