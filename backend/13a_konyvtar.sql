@@ -17,6 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+CREATE DATABASE `13a_konyvtar`
+DEFAULT CHARACTER SET `utf8`
+COLLATE `utf8_hungarian_ci`;
+
+USE `13a_konyvtar`;
+
 --
 -- Adatbázis: `13a_konyvtar`
 --
