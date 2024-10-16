@@ -49,7 +49,7 @@ CREATE TABLE `books` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `release` date NOT NULL,
-  `ISBN` varchar(13) NOT NULL
+  `ISBN` varchar(17) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
