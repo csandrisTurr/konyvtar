@@ -1,5 +1,4 @@
 var xhr = new XMLHttpRequest();
-let konyvId;
 function getBooks() {
     xhr.open('GET', 'http://localhost:3000/books',true)
     xhr.send();
@@ -24,18 +23,16 @@ function getBooks() {
                 deleteBtn.classList.add('btn','btn-danger', 'me-2');
 
                 deleteBtn.addEventListener('click', ()=>{
-                    torles(konyvId);
+                    torles(item.id);
                 })
 
                 let modifyBtn = document.createElement('button');
                 modifyBtn.innerHTML='Módosítás';
                 modifyBtn.classList.add('btn', 'btn-warning')
-                modifyBtn.id = item.id
+                modifyBtn.id = item.id;
 
                 modifyBtn.addEventListener('click', function(){
                     modosit(this.id, item.title, item.release, item.ISBN)
-                    konyvId=this.id;
-
                 })
 
                 id.innerHTML = item.id
@@ -102,7 +99,7 @@ function torles(id) {
 }
 
 function modosit(id, title, release, ISBN) {
-    alert(konyvId)
+    
     let konyvModify = document.querySelector('#konyvModify');
     let konyvUpload = document.querySelector('#konyvUpload');
 
@@ -112,29 +109,29 @@ function modosit(id, title, release, ISBN) {
 
     konyvModify.classList.remove('d-none')
     konyvUpload.classList.add('d-none')
-}
 
-function konyvModositas(konyvId) {
-    let bookMod = JSON.stringify({
-        title: document.querySelector('#title').value,
-        release: document.querySelector('#release').value,
-        ISBN: document.querySelector('#ISBN').value
-    })
+    konyvModify.addEventListener('click',()=>{
+        let bookMod = JSON.stringify({
+            title: document.querySelector('#title').value,
+            release: document.querySelector('#release').value,
+            ISBN: document.querySelector('#ISBN').value
+        })
+        
+        xhr.open('PUT', `http://localhost:3000/books/${id}`, true)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.send(bookMod);
     
-    xhr.open('PUT', `http://localhost:3000/books/${konyvId}`, true)
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-    xhr.send(bookMod);
-
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                konyvModify.classList.add('d-none')
-                konyvUpload.classList.remove('d-none')
-                render('konyv')
-            }
-            else{
-                alert(xhr.responseText);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    konyvModify.classList.add('d-none')
+                    konyvUpload.classList.remove('d-none')
+                    render('konyv')
+                }
+                else{
+                    alert(xhr.responseText);
+                }
             }
         }
-    }
+    })
 }
