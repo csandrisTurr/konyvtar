@@ -29,9 +29,23 @@
                     <th scope="col">#</th>
                     <th scope="col">Név</th>
                     <th scope="col">Születési dátum</th>
+                    <th scope="col">Műveletek</th>
                 </tr>
               </thead>
         </table>
+
+        <hr>
+        <h3 style="color: white;">Szerző feltöltése</h3>
+        <div class="form-floating mb-3 konyvinput">
+            <input type="text" class="form-control" id="name" placeholder="Név">
+            <label for="title">Név</label>
+          </div>
+          <div class="form-floating mb-3 konyvinput">
+            <input type="text" class="form-control" id="birth" placeholder="Születési dátum">
+            <label for="release">Születési dátum</label>
+          </div>
+        <button class="btn btn-primary" onclick="uploadAuthor()" id="szerzoUpload">Szerző feltöltés</button>
+        <button class="btn btn-warning d-none" id="szerzoModify">Szerző Módosítás</button>
 </main>
 </body>
 </html>

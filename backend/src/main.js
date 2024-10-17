@@ -79,7 +79,7 @@ app.put('/authors/:id', (req, res) => {
 app.delete('/authors/:id', (req, res) => {
   const id = req.params.id;
 
-  q(res, 'DELETE FROM `books` WHERE `id` = ?', [id]);
+  q(res, 'DELETE FROM `authors` WHERE `id` = ?', [id]);
 });
 
 app.post('/books/:bookId/authors/:authorId', (req, res) => {

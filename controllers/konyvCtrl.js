@@ -106,6 +106,7 @@ function modosit(id, title, release, ISBN) {
     document.querySelector('#title').value = title;
     document.querySelector('#release').value = moment(release).format('YYYY-MM-DD');
     document.querySelector('#ISBN').value = ISBN;
+    document.querySelector('h3').innerHTML = "Könyv módosítása"
 
     konyvModify.classList.remove('d-none')
     konyvUpload.classList.add('d-none')
