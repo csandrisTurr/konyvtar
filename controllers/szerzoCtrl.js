@@ -32,7 +32,7 @@ function getAuthors() {
                 //modifyBtn.id = item.id;
 
                 modifyBtn.addEventListener('click', function(){
-                    iroModositas(this.id, item.name, item.birth)
+                    iroModositas(item.id, item.name, item.birth)
                 })
 
                 id.innerHTML = item.id
@@ -51,7 +51,7 @@ function getAuthors() {
         }
     }
 }
-function uploadAuthor(params) {
+function uploadAuthor() {
     let author = JSON.stringify({
         name: document.querySelector('#name').value,
         birth: document.querySelector('#birth').value
@@ -74,7 +74,7 @@ function uploadAuthor(params) {
     }
 }
 function iroTorles(id) {
-    xhr.open('DELETE', `http://localhost:3000/auhtors/${id}`, true);
+    xhr.open('DELETE', `http://localhost:3000/authors/${id}`, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send();
 
@@ -90,7 +90,7 @@ function iroTorles(id) {
     }
 }
 function iroModositas(id, name, birth) {
-    
+    alert(id)
     let szerzoModify = document.querySelector('#szerzoModify');
     let szerzoUpload = document.querySelector('#szerzoUpload');
 
@@ -114,8 +114,8 @@ function iroModositas(id, name, birth) {
         xhr.onreadystatechange = function(){
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
-                    konyvModify.classList.add('d-none')
-                    konyvUpload.classList.remove('d-none')
+                    szerzoModify.classList.add('d-none')
+                    szerzoUpload.classList.remove('d-none')
                     render('szerzo')
                 }
                 else{
