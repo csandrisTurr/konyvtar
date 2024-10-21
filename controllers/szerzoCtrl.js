@@ -10,12 +10,13 @@ function getAuthors() {
         if (xhr.readyState == 4 && xhr.status==200) {
 
             var authors = JSON.parse(xhr.responseText);
+            let tbody = document.createElement('tbody');
+
             authors.forEach(item => {
-                let tbody = document.createElement('tbody');
                 let tr = document.createElement('tr');
-                let id = document.createElement('th')
-                let name = document.createElement('th');
-                let birth = document.createElement('th');
+                let id = document.createElement('td')
+                let name = document.createElement('td');
+                let birth = document.createElement('td');
                 let td = document.createElement('td');
 
                 let deleteBtn = document.createElement('button');
@@ -46,8 +47,8 @@ function getAuthors() {
                 tr.appendChild(birth);
                 tr.appendChild(td)
                 tbody.appendChild(tr);
-                szerzoTable.appendChild(tbody)
             });
+            szerzoTable.appendChild(tbody)
         }
     }
 }

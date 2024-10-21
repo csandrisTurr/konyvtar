@@ -82,8 +82,20 @@ app.delete('/authors/:id', (req, res) => {
   q(res, 'DELETE FROM `authors` WHERE `id` = ?', [id]);
 });
 
+app.get('/book_authors', (req, res) => {
+  q(res, 'SELECT * FROM `book_authors`');
+});
+
 app.post('/books/:bookId/authors/:authorId', (req, res) => {
-  res.send('Hello World!');
+  const { bookId, authorId } = req.params;
+
+  q(res, 'INSERT INTO `book_authors` (`authorId`, `bookId`) VALUES (?, ?)', [authorId, bookId]);
+});
+
+app.delete('/books/:bookId/authors/:authorId', (req, res) => {
+  const { bookId, authorId } = req.params;
+
+  q(res, 'DELETE FROM `book_authors` WHERE `authorId`=? AND `bookId`=?', [authorId, bookId]);
 });
 
 app.listen(port, () => {

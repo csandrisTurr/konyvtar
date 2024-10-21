@@ -8,14 +8,15 @@ function getBooks() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status==200) {
 
+            let tbody = document.createElement('tbody');
             var books = JSON.parse(xhr.responseText);
+
             books.forEach(item => {
-                let tbody = document.createElement('tbody');
                 let tr = document.createElement('tr');
-                let id = document.createElement('th')
-                let title = document.createElement('th');
-                let release = document.createElement('th');
-                let ISBN = document.createElement('th');
+                let id = document.createElement('td')
+                let title = document.createElement('td');
+                let release = document.createElement('td');
+                let ISBN = document.createElement('td');
                 let td = document.createElement('td');
 
                 let deleteBtn = document.createElement('button');
@@ -48,8 +49,9 @@ function getBooks() {
                 tr.appendChild(ISBN);
                 tr.appendChild(td)
                 tbody.appendChild(tr);
-                konyvTable.appendChild(tbody)
             });
+
+            konyvTable.appendChild(tbody)
         }
     }
 }

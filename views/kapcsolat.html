@@ -24,34 +24,24 @@
             </div>
         </nav>
     
-        <table class="table table-striped" id="konyvTable">
+        <table class="table table-striped" id="kapcsolatTable">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Cím</th>
-                    <th scope="col">Megjelenés</th>
-                    <th scope="col">ISBN szám</th>
+                    <th scope="col">Author ID</th>
+                    <th scope="col">Konyv ID</th>
                     <th scope="col">Műveletek</th>
                 </tr>
-              </thead>
+            </thead>
         </table>
 
         <hr>
-        <h3 style="color: white;">Könyv feltöltése</h3>
-        <div class="form-floating mb-3 konyvinput">
-            <input type="text" class="form-control" id="title" placeholder="Cím">
-            <label for="title">Cím</label>
-          </div>
-          <div class="form-floating mb-3 konyvinput">
-            <input type="text" class="form-control" id="release" placeholder="Megjelenés">
-            <label for="release">Megjelenés</label>
-          </div>
-          <div class="form-floating mb-3 konyvinput">
-            <input type="text" class="form-control" id="ISBN" placeholder="ISBN szám">
-            <label for="ISBN">ISBN szám</label>
-        </div>
-        <button class="btn btn-primary" onclick="uploadBook()">Könyv feltöltés</button>
+        <h3 style="color: white;">Szerző feltöltése</h3>
+        <h4 style="color: white;">Szerzok</h2>
+        <select id="szerzok" class="form-select mb-3" aria-label="Default select example"></select>
+        <h4 style="color: white;">Konyvek</h2>
+        <select id="konyvek" class="form-select mb-3" aria-label="Default select example"></select>
+        <button class="btn btn-primary" onclick="uploadKapcsolat()" id="szerzoUpload">Feltöltés</button>
+        <button class="btn btn-warning d-none" id="szerzoModify">Szerző Módosítás</button>
 </main>
-
 </body>
 </html>

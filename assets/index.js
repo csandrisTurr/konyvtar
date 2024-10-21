@@ -11,6 +11,10 @@ async function render(view){
             getAuthors()
             break;
         }
+        case 'kapcsolat': {
+            getKapcsolat()
+            break;
+        }
     }
 }
 
