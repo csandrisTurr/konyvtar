@@ -98,6 +98,10 @@ app.delete('/books/:bookId/authors/:authorId', (req, res) => {
   q(res, 'DELETE FROM `book_authors` WHERE `authorId`=? AND `bookId`=?', [authorId, bookId]);
 });
 
+app.get('/title_name', (req, res) =>{
+  q(res, 'SELECT title, name FROM `authors`, books, book_authors WHERE authors.id = book_authors.authorId AND books.id = book_authors.bookId; ')
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
