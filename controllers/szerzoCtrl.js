@@ -91,7 +91,6 @@ function iroTorles(id) {
     }
 }
 function iroModositas(id, name, birth) {
-    alert(id)
     let szerzoModify = document.querySelector('#szerzoModify');
     let szerzoUpload = document.querySelector('#szerzoUpload');
 
